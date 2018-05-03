@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.me.movieslist.MainActivity">
+
+    <TextView
+        android:id="@+id/movie_title_tv"
+        android:layout_width="152dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="88dp"
+        android:text="Movie Name"
+        app:layout_constraintStart_toStartOf="@+id/movie_overview_tv"
+        app:layout_constraintTop_toBottomOf="@+id/movie_poster_iv"/>
+
+    <TextView
+        android:id="@+id/movie_overview_tv"
+        android:layout_width="125dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="44dp"
+        android:text="Movie desc"
+        app:layout_constraintTop_toBottomOf="@+id/movie_title_tv"
+        tools:layout_editor_absoluteX="69dp"/>
+
+    <ImageView
+        android:id="@+id/movie_poster_iv"
+        android:layout_width="300dp"
+        android:layout_height="72dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="28dp"/>
+
+</android.support.constraint.ConstraintLayout>

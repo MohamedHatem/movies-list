@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.me.movieslist.MovieDetailActivity">
+
+    <TextView
+        android:id="@+id/movie_avg_views_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="4.0"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/movie_poster_iv"/>
+
+
+    <TextView
+        android:id="@+id/movie_title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Movie Name"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/movie_avg_views_tv"/>
+
+    <TextView
+        android:id="@+id/movie_overview_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Movie desc"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/movie_title_tv"/>
+
+    <ImageView
+        android:id="@+id/movie_poster_iv"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/left_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="374dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/right_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="10dp"/>
+
+</android.support.constraint.ConstraintLayout>
