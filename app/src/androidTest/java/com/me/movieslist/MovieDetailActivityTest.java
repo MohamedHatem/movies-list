@@ -2,14 +2,12 @@ package com.me.movieslist;
 
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.InstrumentationTestCase;
 
 
 import com.me.movieslist.config.UrlConfig;
-import com.me.movieslist.network.ServiceGenerator;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -33,8 +31,8 @@ public class MovieDetailActivityTest extends InstrumentationTestCase {
 
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityRule =
-            new ActivityTestRule<>(MainActivity.class, true, false);
+    public ActivityTestRule<MoviesListActivity> mActivityRule =
+            new ActivityTestRule<>(MoviesListActivity.class, true, false);
 
     private MockWebServer server;
 

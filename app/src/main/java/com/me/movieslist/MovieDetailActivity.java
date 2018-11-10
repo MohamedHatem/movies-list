@@ -2,7 +2,6 @@ package com.me.movieslist;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -16,9 +15,11 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
@@ -39,6 +40,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView mMovieAvgViewsTv;
 
     String movieId = "-1";
+    private Movie fetchedMovie;
 
     public static void launchActivity(Context from, Bundle extras) {
         Intent lIntent = new Intent(from, MovieDetailActivity.class);
@@ -58,29 +60,40 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private void fetchTheMovie() {
         MoviesClient moviesClient = ServiceGenerator.createService(MoviesClient.class);
-        Call<Movie> call = moviesClient.getMovie(movieId);
-        call.enqueue(new Callback<Movie>() {
-            @Override
-            public void onResponse(Call<Movie> call, Response<Movie> response) {
-                Movie fetchedMovie = response.body();
-                onFetchMovieSuccess(fetchedMovie);
-            }
+        Observable<Movie> movie = moviesClient.getMovie(movieId);
+        movie.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).
+                subscribe(new Observer<Movie>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(Call<Movie> call, Throwable t) {
+                    }
 
-            }
-        });
+                    @Override
+                    public void onNext(Movie fetchedMovie) {
+                        MovieDetailActivity.this.fetchedMovie = fetchedMovie;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        onFetchMovieSuccess();
+                    }
+                });
     }
 
-    private void onFetchMovieSuccess(Movie fetchedMovie) {
+    private void onFetchMovieSuccess() {
 
         mMovieTitle.setText(fetchedMovie.getTitle());
         mMovieOverviewTv.setText(fetchedMovie.getOverview());
         mMovieAvgViewsTv.setText(String.valueOf(fetchedMovie.getVoteAverage()));
 
         Picasso.with(getApplicationContext())
-                .load(UrlConfig.getOriginalTMDBImagePath(fetchedMovie.getPosterPath()))
+                .load(UrlConfig.getOriginalTMDBImagePathW500(fetchedMovie.getBackDropPath()))
                 .into(mMoviePosterIv);
     }
 
