@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.me.movieslist.config.UrlConfig;
@@ -39,6 +41,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     @BindView(R.id.movie_avg_views_tv)
     TextView mMovieAvgViewsTv;
 
+
+    @BindView(R.id.detailed_status_tv)
+    TextView mDetailedStatusTv;
+
+    @BindView(R.id.detailed_status_pb)
+    ProgressBar mDetailedStatusPb;
+
     String movieId = "-1";
     private Movie fetchedMovie;
 
@@ -66,7 +75,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                 subscribe(new Observer<Movie>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        showLoadingMsg();
                     }
 
                     @Override
@@ -76,12 +85,14 @@ public class MovieDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        showErrMsg();
                     }
 
                     @Override
                     public void onComplete() {
+                        hideLoadingMsg();
                         onFetchMovieSuccess();
+
                     }
                 });
     }
@@ -95,6 +106,42 @@ public class MovieDetailActivity extends AppCompatActivity {
         Picasso.with(getApplicationContext())
                 .load(UrlConfig.getOriginalTMDBImagePathW500(fetchedMovie.getBackDropPath()))
                 .into(mMoviePosterIv);
+    }
+
+
+    private void showLoadingMsg() {
+
+        mMovieTitle.setVisibility(View.GONE);
+        mMovieOverviewTv.setVisibility(View.GONE);
+        mMovieAvgViewsTv.setVisibility(View.GONE);
+        mMoviePosterIv.setVisibility(View.GONE);
+
+        mDetailedStatusPb.setVisibility(View.VISIBLE);
+        mDetailedStatusTv.setVisibility(View.VISIBLE);
+        mDetailedStatusTv.setText(getString(R.string.loading_msg));
+    }
+
+    private void showErrMsg() {
+
+        mMovieTitle.setVisibility(View.GONE);
+        mMovieOverviewTv.setVisibility(View.GONE);
+        mMovieAvgViewsTv.setVisibility(View.GONE);
+        mMoviePosterIv.setVisibility(View.GONE);
+
+        mDetailedStatusPb.setVisibility(View.GONE);
+        mDetailedStatusTv.setVisibility(View.VISIBLE);
+        mDetailedStatusTv.setText(getString(R.string.err_msg));
+    }
+
+    private void hideLoadingMsg() {
+
+        mMovieTitle.setVisibility(View.VISIBLE);
+        mMovieOverviewTv.setVisibility(View.VISIBLE);
+        mMovieAvgViewsTv.setVisibility(View.VISIBLE);
+        mMoviePosterIv.setVisibility(View.VISIBLE);
+
+        mDetailedStatusPb.setVisibility(View.GONE);
+        mDetailedStatusTv.setVisibility(View.GONE);
     }
 
 

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MoviesList</string>
 
+    <string name="loading_msg">Loading ...</string>
+    <string name="err_msg">Error is occured</string>
 
 </resources>
